@@ -20,6 +20,7 @@ spec = Gem::Specification.new do |s|
   # s.executables    = ['pruview']
   
   s.add_dependency('mini_magick')
+  s.add_dependency('flvtool2')
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|
