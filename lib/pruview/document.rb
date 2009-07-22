@@ -131,19 +131,8 @@ module Pruview
   Document::PROCESS_FORMAT = 'jpg'
   
   Document::PSD_EXT = '.psd'
-  Document::POSTSCRIPT_EXT = [
-    '.pdf',
-    '.eps',
-    '.ai'
-  ]
-  Document::IMAGE_EXT = [
-    '.bmp',
-    '.gif',
-    '.jpg',
-    '.jpeg',
-    '.png',
-    '.tga'
-  ]
+  Document::POSTSCRIPT_EXT = ['.pdf', '.eps', '.ai']
+  Document::IMAGE_EXT = ['.bmp', '.gif', '.jpg', '.jpeg', '.png', '.tga']
 
 end
 
