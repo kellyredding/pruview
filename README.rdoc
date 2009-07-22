@@ -17,8 +17,10 @@ A gem to ease generating image previews (thumbnails) of various files
 == Dependencies
 
     * image magick + any special file type handling dependencies
-    * ffmpeg + any special file type handling dependencies (for video previewing)
-    * mini_magick rubygem
+    * ffmpeg + h264 encoder + any special file type handling dependencies (for video previewing)
+      # something like 'sudo port install ffmpeg +gpl +lame +x264 +xvid' on Mac OSX Leopard
+    * gawk
+    * Rubygems: mini_magick
 
 == Usage
 

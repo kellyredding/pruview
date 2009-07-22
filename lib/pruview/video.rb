@@ -54,7 +54,7 @@ module Pruview
       command += get_scale_command(info['width'], info['height'], width, height, scale_static)
       scale_factor = get_scale_factor(info['width'], info['height'], width, height)
       if file_extension(target) != '.flv' # use h264 codec with lower bitrate scaling factor
-        command += " -vcodec h264" 
+        command += " -vcodec libx264" 
         scale_factor /= 2.0
       end
       puts "scale factor: #{scale_factor.to_s}"
@@ -116,7 +116,7 @@ module Pruview
     end
   
   # Configurations
-  Video::FFYML = File.join(File.dirname(__FILE__), '..','bin','ffyml')
+  Video::FFYML = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'bin', 'ffyml'))
   Video::FFMPEG = 'ffmpeg'
   Video::FLVTOOL = 'flvtool2'
   Video::PAD_COLOR = "000000"

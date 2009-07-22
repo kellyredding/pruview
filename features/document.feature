@@ -5,7 +5,7 @@ Feature: Document
   
   Scenario: Basic Image thumbnail
     Given I have a basic image document
-    When I create a jpg thumbnail
+    When I create a jpg version
     Then I should have a jpg file
 
   Scenario: Invalid source image

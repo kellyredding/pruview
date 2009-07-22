@@ -40,13 +40,13 @@ var_duration=`cat $temp_out | grep "Duration:" | gawk -F': ' '{print $2}' | gawk
 var_bitrate=`cat $temp_out | grep "Duration:" | gawk -F': ' '{print $4}' | gawk -F' ' '{print $1}'`
 var_codec=`cat $temp_out | grep "Video:" | gawk -F': ' '{print $3}' | gawk -F', ' '{print $1}'`
 var_width=`cat $temp_out | grep "Video:" | gawk -F': ' '{print $3}' | gawk -F', ' '{print $3}' | gawk -F'x' '{print $1}'`
-var_height=`cat $temp_out | grep "Video:" | gawk -F': ' '{print $3}' | gawk -F', ' '{print $3}' | gawk -F'x' '{print $2}'`
+var_height=`cat $temp_out | grep "Video:" | gawk -F': ' '{print $3}' | gawk -F', ' '{print $3}' | gawk -F'x' '{print $2}' | gawk -F' ' '{print $1}'`
 var_framerate=`cat $temp_out | grep "Video:" | gawk -F': ' '{print $3}' | gawk -F', ' '{print $5}' | gawk -F' ' '{print $1}'`
 if [ "$var_framerate" = "" ]; then
   var_framerate=`cat $temp_out | grep "Video:" | gawk -F': ' '{print $3}' | gawk -F', ' '{print $4}' | gawk -F' ' '{print $1}'`
 fi
 var_audio_codec=`cat $temp_out | grep "Audio:" | gawk -F': ' '{print $3}' | gawk -F', ' '{print $1}'`
-var_audio_bitrate=`cat $temp_out | grep "Audio:" | gawk -F', ' '{print $4}' | gawk -F' ' '{print $1}'`
+var_audio_bitrate=`cat $temp_out | grep "Audio:" | gawk -F', ' '{print $5}' | gawk -F' ' '{print $1}'`
 var_audio_sampling=`cat $temp_out | grep "Audio:" | gawk -F', ' '{print $2}' | gawk -F' ' '{print $1}'`
 
 # write the output YAML file

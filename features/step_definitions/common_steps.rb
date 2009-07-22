@@ -1,4 +1,4 @@
-When /^I create a (.+) thumbnail$/ do |format|
+When /^I create a[n]* (.+) version$/ do |format|
   @output = @file.send("to_#{format}", 'file', 50, 50)
 end
 
