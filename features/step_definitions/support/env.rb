@@ -8,7 +8,11 @@ OUTPUT_PATH = "./test/output"
 INVALID_OUTPUT_PATH = "./test/output/invalid"
 FILES = {
   'basic image' => "./test/files/basic.jpg",
-  'invalid' => "./test/files/invalid.jpg",
+  'invalid image' => "./test/files/invalid.jpg",
+  'error image' => "./test/files/error.jpg",
+  'basic video' => "./test/files/basic.mov",
+  'invalid video' => "./test/files/invalid.mov",
+  'error video' => "./test/files/error.mov",
   'invalid format' => "./test/files/invalid_format.poop"
 }
 
