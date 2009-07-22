@@ -4,8 +4,8 @@ World(Test::Unit::Assertions)
 require File.dirname(__FILE__) + '/../../../lib/pruview'
 
 FILES_PATH = "./test/files"
-OUTPUT_PATH = "./test/output"
-INVALID_OUTPUT_PATH = "./test/output/invalid"
+OUTPUT_PATH = "./test_output"
+INVALID_OUTPUT_PATH = "./test_output/invalid"
 FILES = {
   'basic image' => "./test/files/basic.jpg",
   'invalid image' => "./test/files/invalid.jpg",
