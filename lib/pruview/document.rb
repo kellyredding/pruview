@@ -1,16 +1,11 @@
 module Pruview
 
   class Document
-    require 'rubygems'
-    
-    # Mini magick wrappers ImageMagick mogrify commands, operating on temporary files instead of in memory
-    gem 'mini_magick'
-    require 'mini_magick'
     
     def initialize(source, target_dir)
-      raise "Invalid source file:: #{source.to_s}" if !File.file?(source)
-      raise "Invalid target directory: #{target_dir.to_s}" if !File.directory?(target_dir)
-      raise "Document not supported - file extension: " + file_extension(source) if !format_supported?(source)
+      raise Pruview::Exceptions::InvalidError, "Invalid source file: #{source.to_s}" if !File.file?(source)
+      raise Pruview::Exceptions::InvalidError, "Invalid target directory: #{target_dir.to_s}" if !File.directory?(target_dir)
+      raise Pruview::Exceptions::InvalidError, "Document not supported - file extension: " + file_extension(source) if !format_supported?(source)
       @source = source
       @target_dir = target_dir
       @image = process_image(get_image(source))
