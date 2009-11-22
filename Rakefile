@@ -7,7 +7,7 @@ require 'lib/pruview/version'
 task :default => :test
 
 spec = Gem::Specification.new do |s|
-  s.name             = 'pruview'
+  s.name             = 'kelredd-pruview'
   s.version          = Pruview::Version.to_s
   s.has_rdoc         = true
   s.extra_rdoc_files = %w(README.rdoc)
@@ -15,7 +15,7 @@ spec = Gem::Specification.new do |s|
   s.summary          = "A gem to ease generating image previews (thumbnails) of various files"
   s.author           = 'Kelly Redding'
   s.email            = 'kelly@kelredd.com'
-  s.homepage         = ''
+  s.homepage         = 'http://github.com/kelredd/pruview'
   s.files            = %w(README.rdoc Rakefile) + Dir.glob("{features,lib,test}/**/*")
   # s.executables    = ['pruview']
   
@@ -34,7 +34,7 @@ Rake::TestTask.new do |t|
 end
 
 desc 'Generate the gemspec to serve this Gem from Github'
-task :github do
+task :gemspec do
   file = File.dirname(__FILE__) + "/#{spec.name}.gemspec"
   File.open(file, 'w') {|f| f << spec.to_ruby }
   puts "Created gemspec: #{file}"

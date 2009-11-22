@@ -12,8 +12,8 @@ A gem to ease generating image previews (thumbnails) of various files
     # if you want to preview postscript files (PDFs, Adobe Illustrator, etc...)
     # => install any postscript handling libs or dependencies for image magick
     
-    sudo gem install kelredd-pruview --source http://gems.github.com
-
+    gem install kelredd-pruview
+    
 == Dependencies
 
     * image magick + any special file type handling dependencies
