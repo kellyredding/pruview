@@ -2,12 +2,15 @@ module Pruview
 
   class Document
     
-    def initialize(source, target_dir)
+    TMP_DIR = '/tmp'
+    
+    def initialize(source, target_dir, target_permission=0666)
       raise Pruview::Exceptions::InvalidError, "Invalid source file: #{source.to_s}" if !File.file?(source)
       raise Pruview::Exceptions::InvalidError, "Invalid target directory: #{target_dir.to_s}" if !File.directory?(target_dir)
       raise Pruview::Exceptions::InvalidError, "Document not supported - file extension: " + file_extension(source) if !format_supported?(source)
       @source = source
       @target_dir = target_dir
+      @target_permission = target_permission
       @image = process_image(get_image(source))
       @tempfile = nil
     end
@@ -19,8 +22,11 @@ module Pruview
         img.quality '90'
         img.interlace 'plane'
       end
+      tmp_target = File.join(TMP_DIR, name.to_s + '.jpg')
+      scale_img.write(tmp_target)
+      FileUtils.chmod(@target_permission, tmp_target)
       target = File.join(@target_dir, name.to_s + '.jpg')
-      scale_img.write(target)
+      FileUtils.mv(tmp_target, target)
       return target
     end
     
