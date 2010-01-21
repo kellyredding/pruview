@@ -22,7 +22,7 @@ module Pruview
         img.quality '90'
         img.interlace 'plane'
       end
-      tmp_target = File.join(TMP_DIR, name.to_s + '.jpg')
+      tmp_target = File.join(TMP_DIR, "#{name.to_s}-#{$$}-#{Time.now.to_i}-#{rand(1000)}.jpg")
       scale_img.write(tmp_target)
       FileUtils.chmod(@target_permission, tmp_target)
       target = File.join(@target_dir, name.to_s + '.jpg')
