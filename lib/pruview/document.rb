@@ -26,7 +26,7 @@ module Pruview
       scale_img.write(tmp_target)
       FileUtils.chmod(@target_permission, tmp_target)
       target = File.join(@target_dir, name.to_s + '.jpg')
-      FileUtils.mv(tmp_target, target)
+      FileUtils.mv(tmp_target, target, :force => true)
       return target
     end
     
