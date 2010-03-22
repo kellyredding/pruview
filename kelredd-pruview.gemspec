@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{kelredd-pruview}
-  s.version = "0.1.6"
+  s.version = "0.1.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kelly Redding"]
-  s.date = %q{2010-03-17}
+  s.date = %q{2010-03-22}
   s.email = %q{kelly@kelredd.com}
   s.extra_rdoc_files = ["README.rdoc"]
   s.files = ["README.rdoc", "Rakefile", "features/document.feature", "features/step_definitions", "features/step_definitions/common_steps.rb", "features/step_definitions/document_steps.rb", "features/step_definitions/support", "features/step_definitions/support/env.rb", "features/step_definitions/support/helpers.rb", "features/step_definitions/video_image_steps.rb", "features/step_definitions/video_steps.rb", "features/video.feature", "features/video_image.feature", "lib/pruview", "lib/pruview/document.rb", "lib/pruview/exceptions.rb", "lib/pruview/sRGB.icm", "lib/pruview/USWebCoatedSWOP.icc", "lib/pruview/version.rb", "lib/pruview/video.rb", "lib/pruview/video_image.rb", "lib/pruview.rb", "test/files", "test/files/basic.jpg", "test/files/basic.mpg", "test/files/error.jpg", "test/files/error.mov", "test/files/invalid_format.poop", "test/test_helper.rb", "test/unit", "test/unit/pruview_test.rb"]
