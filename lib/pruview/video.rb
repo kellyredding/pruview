@@ -1,7 +1,7 @@
 module Pruview
 
   class Video
-  
+
     # this class assumes you have 'ffmpeg' and 'flvtool2' installed and in your path
 
     def initialize(source, target_dir, bitrate_mult = 1)
@@ -12,49 +12,54 @@ module Pruview
       @target_dir = target_dir
       @bitrate_multiplier = bitrate_mult
     end
-  
+
     def to_flv(name, width, height, scale_static = false)
       target = to_base(name, width, height, '.flv', scale_static)
       run("#{FLVTOOL} -U #{target}", "Unable to add meta-data for #{target}.")
       return target
     end
-    
+
     def to_mov(name, width, height, scale_static = false)
       target = to_base(name, width, height, '.mov', scale_static)
       # TODO: run qt-faststart
       return target
     end
-    
+
+    def info
+      yml_info_path = Tempfile.new("#{File.basename(@source)}.yml").path
+      self.get_info(yml_info_path)
+    end
+
   protected
-  
+
     def to_base(name, width, height, extension, scale_static)
       target = File.join(@target_dir, name.to_s + extension)
       info_yml = File.join(@target_dir, name.to_s + '_info.yml')
       run(build_command(@source, target, width, height, get_info(info_yml), scale_static), "Unable to convert #{@source} to #{target}.")
       return target
     end
-  
+
     def format_supported?(source)
       file_ext = file_extension(source)
       EXT.each { |extension| return true if file_ext == extension }
       return false
     end
-    
+
     def file_extension(source_file)
-       File.extname(source_file).downcase.chomp  
+       File.extname(source_file).downcase.chomp
     end
-    
-    def get_info(yml)
-      run("#{FFYML} #{@source} #{yml}", "Unable to get video info")
-      YAML.load_file(yml)
+
+    def get_info(yml_path)
+      run("#{FFYML} #{@source} #{yml_path}", "Unable to get video info")
+      YAML.load_file(yml_path)
     end
-  
+
     def build_command(source, target, width, height, info, scale_static)
       command = "#{FFMPEG} -i #{source}"
       command += get_scale_command(info['width'], info['height'], width, height, scale_static)
       scale_factor = get_scale_factor(info['width'], info['height'], width, height)
       if file_extension(target) != '.flv' # use h264 codec with lower bitrate scaling factor
-        command += " -vcodec libx264" 
+        command += " -vcodec libx264"
         scale_factor /= 2.0
       end
       puts "scale factor: #{scale_factor.to_s}"
@@ -67,7 +72,7 @@ module Pruview
       command += " -ar #{AUDIO_SAMPLING}"
       command += " -y #{target}"
     end
-    
+
     def get_scale_factor(source_width, source_height, scale_width, scale_height)
       if source_width > source_height
         return (scale_width.to_f / source_width.to_f)
@@ -75,7 +80,7 @@ module Pruview
         return (scale_height.to_f / source_height.to_f)
       end
     end
-    
+
     def get_scale_command(source_width, source_height, scale_width, scale_height, static)
       # this type of scaling assumes a static overall resolution with black padding added appropriately
       # to keep the meaningful video area at the source aspect ratio
@@ -90,7 +95,7 @@ module Pruview
       end
       scale_command
     end
-    
+
     def get_scaling_params(source_width, source_height, scale_width, scale_height)
       params = {}
       params[:left],params[:top],params[:right],params[:bottom] = 0,0,0,0
@@ -114,7 +119,7 @@ module Pruview
     def run(command, error_message = "Unknown error.")
       raise "Ffmpeg error: " + error_message + " - command: '#{command}'" if !system(command)
     end
-  
+
   # Configurations
   Video::FFYML = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'bin', 'ffyml'))
   Video::FFMPEG = 'ffmpeg'
@@ -122,7 +127,7 @@ module Pruview
   Video::PAD_COLOR = "000000"
   Video::AUDIO_BITRATE = '128' # kbps
   Video::AUDIO_SAMPLING = '44100'
-  
+
   Video::EXT = ['.avi', '.flv', '.mov', '.mpg', '.mp4']
 
   end
