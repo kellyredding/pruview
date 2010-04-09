@@ -16,7 +16,7 @@ spec = Gem::Specification.new do |s|
   s.author           = 'Kelly Redding'
   s.email            = 'kelly@kelredd.com'
   s.homepage         = 'http://github.com/kelredd/pruview'
-  s.files            = %w(README.rdoc Rakefile) + Dir.glob("{features,lib,test}/**/*")
+  s.files            = %w(README.rdoc Rakefile) + Dir.glob("{bin,features,lib,test}/**/*")
   # s.executables    = ['pruview']
   
   s.add_dependency('mini_magick')
