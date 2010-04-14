@@ -8,7 +8,8 @@ module Pruview
       raise Pruview::Exceptions::InvalidError, "Invalid target directory: #{target_dir.to_s}" if !File.directory?(target_dir)
       raise Pruview::Exceptions::InvalidError, "Video not supported - file extension: " + file_extension(source) if !format_supported?(source)
       target = File.join(target_dir, name.to_s + '.jpg')
-      run(build_command(source, '-ss 00:00:01.00', 'mjpeg', target), "Unable to get preview image for #{target}")
+      video = Video.new(source, target)
+      run(build_command(source, "-ss 00:00:#{video.info['duration'] * 0.1}", 'mjpeg', target), "Unable to get preview image for #{target}")
       # TODO: analyze image - create better
       return target
     end
