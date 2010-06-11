@@ -3,7 +3,7 @@ module Pruview
     
     MAJOR = 0
     MINOR = 1
-    TINY  = 10
+    TINY  = 11
     
     def self.to_s # :nodoc:
       [MAJOR, MINOR, TINY].join('.')
