@@ -9,7 +9,8 @@ module Pruview
       raise Pruview::Exceptions::InvalidError, "Video not supported - file extension: " + file_extension(source) if !format_supported?(source)
       target = File.join(target_dir, name.to_s + '.jpg')
       video = Video.new(source, target_dir)
-      run(build_command(source, "-ss 00:00:#{video.info['duration'] * 0.1}", 'mjpeg', target), "Unable to get preview image for #{target}")
+      duration = video.info['duration'] || 10
+      run(build_command(source, "-ss 00:00:#{duration * 0.1}", 'mjpeg', target), "Unable to get preview image for #{target}")
       # TODO: analyze image - create better
       return target
     end
