@@ -11,10 +11,10 @@ module Pruview
         Pruview::VideoImage.to_jpg(FILES['invalid video'], OUTPUT_PATH, 'file')
       end
       should_complain_about("converting invalid video formats", /not supported - file extension: .poop/) do
-        Pruview::Document.new(FILES['invalid format'], OUTPUT_PATH)
+        Pruview::VideoImage.to_jpg(FILES['invalid format'], OUTPUT_PATH, 'file')
       end
       should_complain_about("converting with invalid output paths", /^Invalid target directory/) do
-        Pruview::Document.new(FILES['basic video'], INVALID_OUTPUT_PATH)
+        Pruview::VideoImage.to_jpg(FILES['basic video'], INVALID_OUTPUT_PATH, 'file')
       end
 
       should "create a jpg version of itself" do

@@ -20,7 +20,7 @@ module Pruview
       end
 
       should "create a jpg version of itself" do
-        @output = @file.send("to_jpg", 'file', 50, 50)
+        @output = @file.to_jpg('file', 50, 50)
         assert File.exists?(@output)
         assert_equal '.jpg', File.extname(@output)
       end

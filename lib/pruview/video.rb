@@ -1,6 +1,15 @@
 module Pruview
 
   class Video
+    # Configurations
+    Video::FFYML = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'bin', 'ffyml'))
+    Video::FFMPEG = 'ffmpeg'
+    Video::FLVTOOL = 'flvtool2'
+    Video::PAD_COLOR = "000000"
+    Video::AUDIO_BITRATE = 128 # kbps
+    Video::AUDIO_SAMPLING = 44100
+
+    Video::EXT = ['.avi', '.flv', '.mov', '.mpg', '.mp4']
 
     # this class assumes you have 'ffmpeg' and 'flvtool2' installed and in your path
 
@@ -58,17 +67,21 @@ module Pruview
       command = "#{FFMPEG} -i #{source}"
       command += get_scale_command(info['width'], info['height'], width, height, scale_static)
       scale_factor = get_scale_factor(info['width'], info['height'], width, height)
+      bitrate_factor = file_extension(target) != '.flv' ? 1000 : 1
       if file_extension(target) != '.flv' # use h264 codec with lower bitrate scaling factor
-        command += " -vcodec libx264"
+        command += " -vcodec libx264 -vpre slow -threads 0"
         scale_factor /= 2.0
       end
       puts "scale factor: #{scale_factor.to_s}"
+      puts "info bitrate: #{info['bitrate']}"
       if !info['bitrate'].zero?
-        command += " -b #{(info['bitrate']*@bitrate_multiplier*scale_factor).to_s}"
+        calc_bitrate = info['bitrate']*@bitrate_multiplier*scale_factor*bitrate_factor
+        puts "calc bitrate: #{calc_bitrate}"
+        command += " -b #{calc_bitrate}"
       else
         command += " -sameq"
       end
-      command += " -ab #{AUDIO_BITRATE}"
+      command += " -ab #{AUDIO_BITRATE*bitrate_factor}"
       command += " -ar #{AUDIO_SAMPLING}"
       command += " -y #{target}"
     end
@@ -120,16 +133,5 @@ module Pruview
       raise "Ffmpeg error: " + error_message + " - command: '#{command}'" if !system(command)
     end
 
-  # Configurations
-  Video::FFYML = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'bin', 'ffyml'))
-  Video::FFMPEG = 'ffmpeg'
-  Video::FLVTOOL = 'flvtool2'
-  Video::PAD_COLOR = "000000"
-  Video::AUDIO_BITRATE = '128' # kbps
-  Video::AUDIO_SAMPLING = '44100'
-
-  Video::EXT = ['.avi', '.flv', '.mov', '.mpg', '.mp4']
-
   end
 end
-
