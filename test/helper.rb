@@ -30,13 +30,13 @@ FILES = {
 FileUtils.mkdir_p File.expand_path(FILES_PATH) unless File.exists? File.expand_path(FILES_PATH)
 FileUtils.mkdir_p File.expand_path(OUTPUT_PATH) unless File.exists? File.expand_path(OUTPUT_PATH)
 
-def should_complain_about(klass, file_type, output_path, message_match)
-  should "complain about #{file_type} files" do
+def should_complain_about(should_statement, message_match, &block)
+  should "complain about #{should_statement}" do
     assert_raises Pruview::Exceptions::InvalidError do
-      klass.new(FILES[file_type], output_path)
+      block.call
     end
     begin
-      klass.new(FILES[file_type], output_path)
+      block.call
     rescue Exception => err
       assert_match message_match, err.message
     end
