@@ -39,6 +39,10 @@ module Pruview
       self.get_info(yml_info_path)
     end
 
+    def to_jpg(name)
+      VideoImage.to_jpg(@source, @target_dir, name)
+    end
+
   protected
 
     def to_base(name, width, height, extension, scale_static)

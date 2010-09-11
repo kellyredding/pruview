@@ -7,7 +7,7 @@ module Pruview
       setup { @file = Pruview::Video.new(FILES['basic video'], OUTPUT_PATH) }
       subject { @file }
 
-      should_have_instance_methods :to_flv, :to_mov, :info
+      should_have_instance_methods :to_flv, :to_mov, :to_jpg, :info
 
       should_complain_about("converting invalid video", /^Invalid source file/) do
         Pruview::Video.new(FILES['invalid video'], OUTPUT_PATH)
@@ -32,6 +32,12 @@ module Pruview
       #  assert File.exists?(@output)
       #  assert_equal '.flv', File.extname(@output)
       #end
+
+      should "create a jpg version of itself" do
+        @output = @file.to_jpg('file')
+        assert File.exists?(@output)
+        assert_equal '.jpg', File.extname(@output)
+      end
 
     end
 
