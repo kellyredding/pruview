@@ -53,7 +53,7 @@ module Pruview
     def get_image(source)
       source = get_postscript_source(source) if format_postscript?(source)
       begin
-        return MiniMagick::Image.from_file(source)
+        return MiniMagick::Image.open(source)
       rescue Exception => err
         raise "Error reading source image: #{err.message}"
       end
@@ -91,7 +91,7 @@ module Pruview
 
     def scale_image(width, height, crop = false)
       begin
-        image = MiniMagick::Image.from_file(@image.path)
+        image = MiniMagick::Image.open(@image.path)
         crop_image(image, crop)
         image.resize "#{width}x#{height}" if crop || @image[:width].to_i > width || @image[:height] > height
         return image
