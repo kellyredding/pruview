@@ -24,7 +24,7 @@ spec = Gem::Specification.new do |s|
   s.add_development_dependency("kelredd-useful", [">= 0.4.0"])
   s.add_development_dependency("kelredd-simple-gem", [">= 0.7.0"])
 
-  s.add_dependency('mini_magick', "~>2.3")
+  s.add_dependency('mini_magick', "~>3.0")
   s.add_dependency('flvtool2')
 end
 
