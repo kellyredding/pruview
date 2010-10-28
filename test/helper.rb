@@ -24,7 +24,8 @@ FILES = {
   'basic video' => "./test/files/basic.mpg",
   'invalid video' => "./test/files/invalid.mov",
   'error video' => "./test/files/error.mov",
-  'invalid format' => "./test/files/invalid_format.poop"
+  'invalid format' => "./test/files/invalid_format.poop",
+  'tiff' => "./test/files/image.tiff"
 }
 
 FileUtils.mkdir_p File.expand_path(FILES_PATH) unless File.exists? File.expand_path(FILES_PATH)

@@ -20,9 +20,21 @@ module Pruview
       end
 
       should "create a jpg version of itself" do
-        @output = @file.to_jpg('file', 50, 50)
+        @output = @file.to_jpg('basic_image', 50, 50)
         assert File.exists?(@output)
         assert_equal '.jpg', File.extname(@output)
+      end
+
+      context "of a TIFF file" do
+        setup { @file = Pruview::Document.new(FILES['tiff'], OUTPUT_PATH) }
+        subject { @file }
+
+        should "create a jpg version of itself" do
+          @output = @file.to_jpg('tiff', 50, 50)
+          assert File.exists?(@output)
+          assert_equal '.jpg', File.extname(@output)
+        end
+
       end
 
     end
