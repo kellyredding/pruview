@@ -30,40 +30,40 @@ output_file=$2
 temp_out="/tmp/ffinfo.tmp"
 
 # run ffmpeg in a known error state and capture it's file properties output from standard error
-echo "ffmpeg -i $video_file 2> $temp_out"
+echo "ffmpeg -i \"$video_file\" 2> \"$temp_out\""
 ffmpeg -i "$video_file" 2> "$temp_out"
 
 # parse temp_out for the file properties
 # format
-var_format=`cat $temp_out | grep "Input #0" | gawk -F', ' '{print $2}'`
-var_duration=`cat $temp_out | grep "Duration:" | gawk -F': ' '{print $2}' | gawk -F', ' '{print $1}'`
-var_bitrate=`cat $temp_out | grep "Duration:" | gawk -F': ' '{print $4}' | gawk -F' ' '{print $1}'`
-var_codec=`cat $temp_out | grep "Video:" | gawk -F': ' '{print $3}' | gawk -F', ' '{print $1}'`
-var_width=`cat $temp_out | grep "Video:" | gawk -F': ' '{print $3}' | gawk -F', ' '{print $3}' | gawk -F'x' '{print $1}'`
-var_height=`cat $temp_out | grep "Video:" | gawk -F': ' '{print $3}' | gawk -F', ' '{print $3}' | gawk -F'x' '{print $2}' | gawk -F' ' '{print $1}'`
-var_framerate=`cat $temp_out | grep "Video:" | gawk -F': ' '{print $3}' | gawk -F', ' '{print $5}' | gawk -F' ' '{print $1}'`
+var_format=`cat "$temp_out" | grep "Input #0" | gawk -F', ' '{print $2}'`
+var_duration=`cat "$temp_out" | grep "Duration:" | gawk -F': ' '{print $2}' | gawk -F', ' '{print $1}'`
+var_bitrate=`cat "$temp_out" | grep "Duration:" | gawk -F': ' '{print $4}' | gawk -F' ' '{print $1}'`
+var_codec=`cat "$temp_out" | grep "Video:" | gawk -F': ' '{print $3}' | gawk -F', ' '{print $1}'`
+var_width=`cat "$temp_out" | grep "Video:" | gawk -F': ' '{print $3}' | gawk -F', ' '{print $3}' | gawk -F'x' '{print $1}'`
+var_height=`cat "$temp_out" | grep "Video:" | gawk -F': ' '{print $3}' | gawk -F', ' '{print $3}' | gawk -F'x' '{print $2}' | gawk -F' ' '{print $1}'`
+var_framerate=`cat "$temp_out" | grep "Video:" | gawk -F': ' '{print $3}' | gawk -F', ' '{print $5}' | gawk -F' ' '{print $1}'`
 if [ "$var_framerate" = "" ]; then
-  var_framerate=`cat $temp_out | grep "Video:" | gawk -F': ' '{print $3}' | gawk -F', ' '{print $4}' | gawk -F' ' '{print $1}'`
+  var_framerate=`cat "$temp_out" | grep "Video:" | gawk -F': ' '{print $3}' | gawk -F', ' '{print $4}' | gawk -F' ' '{print $1}'`
 fi
-var_audio_codec=`cat $temp_out | grep "Audio:" | gawk -F': ' '{print $3}' | gawk -F', ' '{print $1}'`
-var_audio_bitrate=`cat $temp_out | grep "Audio:" | gawk -F', ' '{print $5}' | gawk -F' ' '{print $1}'`
-var_audio_sampling=`cat $temp_out | grep "Audio:" | gawk -F', ' '{print $2}' | gawk -F' ' '{print $1}'`
+var_audio_codec=`cat "$temp_out" | grep "Audio:" | gawk -F': ' '{print $3}' | gawk -F', ' '{print $1}'`
+var_audio_bitrate=`cat "$temp_out" | grep "Audio:" | gawk -F', ' '{print $5}' | gawk -F' ' '{print $1}'`
+var_audio_sampling=`cat "$temp_out" | grep "Audio:" | gawk -F', ' '{print $2}' | gawk -F' ' '{print $1}'`
 
 # write the output YAML file
-echo "# file properties" > $output_file
-echo format: $var_format >> $output_file
-echo duration: $var_duration >> $output_file
-echo bitrate: $var_bitrate >> $output_file
-echo codec: $var_codec >> $output_file
-echo width: $var_width >> $output_file
-echo height: $var_height >> $output_file
-echo framerate: $var_framerate >> $output_file
-echo audio_codec: $var_audio_codec >> $output_file
-echo audio_bitrate: $var_audio_bitrate >> $output_file
-echo audio_sampling: $var_audio_sampling >> $output_file
+echo "# file properties" > "$output_file"
+echo "format: $var_format" >> "$output_file"
+echo "duration: $var_duration" >> "$output_file"
+echo "bitrate: $var_bitrate" >> "$output_file"
+echo "codec: $var_codec" >> "$output_file"
+echo "width: $var_width" >> "$output_file"
+echo "height: $var_height" >> "$output_file"
+echo "framerate: $var_framerate" >> "$output_file"
+echo "audio_codec: $var_audio_codec" >> "$output_file"
+echo "audio_bitrate: $var_audio_bitrate" >> "$output_file"
+echo "audio_sampling: $var_audio_sampling" >> "$output_file"
 
 # cleanup
-rm $temp_out
+rm "$temp_out"
 
 echo "Done."
 

@@ -23,6 +23,12 @@ module Pruview
         assert_equal '.jpg', File.extname(@output)
       end
 
+      should "quote the source path in #build_command" do
+        source = 'foo bar.jpg'
+        command = Pruview::VideoImage.build_command(source, 'a', 'b', 'c')
+        assert_equal 'ffmpeg -i "foo bar.jpg" a -f b -an -y c', command
+      end
+
     end
 
   end
