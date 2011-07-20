@@ -1,5 +1,6 @@
-/pkg/
-/doc/
-/coverage/
+pkg/*
+.bundle
+*.gem
+*.log
 /test/output/
 /test_output
