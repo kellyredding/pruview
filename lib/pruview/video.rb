@@ -63,8 +63,12 @@ module Pruview
     end
 
     def get_info(yml_path)
-      run("#{FFYML} #{@source} #{yml_path}", "Unable to get video info")
+      run(info_command(@source, yml_path), "Unable to get video info")
       YAML.load_file(yml_path)
+    end
+
+    def info_command(source, yml_path)
+      %Q{#{FFYML} "#{source}" "#{yml_path}"}
     end
 
     def build_command(source, target, width, height, info, scale_static)
