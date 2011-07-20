@@ -39,6 +39,11 @@ module Pruview
         assert_equal '.jpg', File.extname(@output)
       end
 
+      should "quote the source and yml_path args to the ffyml command" do
+        command = @file.send(:info_command, 'foo bar.jpg', 'foo bar.yml')
+        assert_equal %Q{#{Pruview::Video::FFYML} "foo bar.jpg" "foo bar.yml"}, command
+      end
+
     end
 
   end

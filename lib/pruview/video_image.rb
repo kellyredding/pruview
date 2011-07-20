@@ -28,7 +28,7 @@ module Pruview
     end
     
     def self.build_command(source, time_str, format, target)
-      command = "#{Video::FFMPEG} -i #{source}"
+      command = %Q{#{Video::FFMPEG} -i "#{source}"}
       command += " #{time_str}"
       command += " -f #{format}" if !format.empty?
       command += " -an -y #{target}"
