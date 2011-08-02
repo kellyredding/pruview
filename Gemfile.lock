@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    kelredd-pruview (0.2.3)
+    kelredd-pruview (0.2.4)
       flvtool2
       mini_magick (~> 3.0)
 
