@@ -1,8 +1,4 @@
-require 'rubygems'
-require 'test/unit'
-require 'shoulda'
-require 'useful/shoulda_macros/test_unit'
-require 'leftright'
+require 'test_belt'
 
 # Add test and lib paths to the $LOAD_PATH
 [ File.dirname(__FILE__),

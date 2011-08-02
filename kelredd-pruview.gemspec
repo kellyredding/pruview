@@ -18,10 +18,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_development_dependency("bundler", ["~> 1.0"])
-  s.add_development_dependency("test-belt", ["~> 1.0"])
-  s.add_development_dependency(%q<shoulda>, [">= 2.10.0"])
-  s.add_development_dependency(%q<leftright>, [">= 0.0.6"])
-  s.add_development_dependency(%q<kelredd-useful>, [">= 0.4.0"])
+  s.add_development_dependency("test-belt", ["~> 2.0"])
   s.add_dependency(%q<mini_magick>, ["~> 3.0"])
   s.add_dependency(%q<flvtool2>, [">= 0"])
 end
