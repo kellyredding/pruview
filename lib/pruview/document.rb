@@ -71,7 +71,9 @@ module Pruview
     end
 
     def process_image(image)
-      image.format PROCESS_FORMAT
+      image.format PROCESS_FORMAT do |command|
+        command.args << "-limit memory #{MAX_MEMORY}" if MAX_MEMORY
+      end
       set_RGB_colorspace(image)
       image.strip
       return image
@@ -135,6 +137,7 @@ module Pruview
 
   # Configurations
   Document::PROCESS_FORMAT = 'jpg'
+  Document::MAX_MEMORY = '500mb'
 
   Document::PSD_EXT = '.psd'
   Document::POSTSCRIPT_EXT = ['.pdf', '.eps', '.ai']
