@@ -71,17 +71,22 @@ module Pruview
     end
 
     def process_image(image)
-      image.format PROCESS_FORMAT
+      image.format PROCESS_FORMAT do |command|
+        command.args << GLOBAL_CMD_ARGS
+      end
       set_RGB_colorspace(image)
-      image.strip
+      image.strip do |command|
+        command.args << GLOBAL_CMD_ARGS
+      end
       return image
     end
 
     def set_RGB_colorspace(image)
-      colorspace = run_system_command("identify -format \"%r\" #{image.path}", "Error reading document colorspace")
+      colorspace = run_system_command("identify #{GLOBAL_CMD_ARGS} -format \"%r\" #{image.path}", "Error reading document colorspace")
       puts "Colorspace: #{colorspace}"
       if colorspace =~ /CMYK/
         image.combine_options do |img|
+          img.args << GLOBAL_CMD_ARGS
           img.profile File.join(File.dirname(__FILE__), 'USWebCoatedSWOP.icc')
           img.profile File.join(File.dirname(__FILE__), 'sRGB.icm')
           img.colorspace 'sRGB'
@@ -93,7 +98,11 @@ module Pruview
       begin
         image = MiniMagick::Image.open(@image.path)
         crop_image(image, crop)
-        image.resize "#{width}x#{height}" if crop || @image[:width].to_i > width || @image[:height] > height
+        if crop || @image[:width].to_i > width || @image[:height] > height
+          image.resize "#{width}x#{height}" do |cmd|
+            cmd.args << GLOBAL_CMD_ARGS
+          end
+        end
         return image
       rescue Exception => err
         raise "Error scaling image: #{err.message}"
@@ -112,14 +121,18 @@ module Pruview
           # shave off height
           shave_off = ((image[:height].to_i - rheight)/2).round
           puts "shave off height: #{image[:height].to_i - rheight}"
-          image.shave("0x#{shave_off}")
+          image.shave("0x#{shave_off}") do |cmd|
+            cmd.args << GLOBAL_CMD_ARGS
+          end
           puts "image crop size: #{image[:width].to_i}x#{image[:height].to_i}"
         elsif ratio_height > ratio_width || (ratio_width == ratio_height && image[:width].to_i > image[:height].to_i)
           # calc ratio width from height
           rwidth = (image[:height].to_i*(ratio_width.to_f / ratio_height.to_f)).round
           # shave off width
           shave_off = ((image[:width].to_i - rwidth).to_f / 2.to_f).round
-          image.shave("#{shave_off}x0")
+          image.shave("#{shave_off}x0") do |cmd|
+            cmd.args << GLOBAL_CMD_ARGS
+          end
         end
       end
       return image
@@ -135,6 +148,7 @@ module Pruview
 
   # Configurations
   Document::PROCESS_FORMAT = 'jpg'
+  Document::GLOBAL_CMD_ARGS = '-limit memory 500mb'
 
   Document::PSD_EXT = '.psd'
   Document::POSTSCRIPT_EXT = ['.pdf', '.eps', '.ai']
