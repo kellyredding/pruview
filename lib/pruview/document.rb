@@ -72,21 +72,21 @@ module Pruview
 
     def process_image(image)
       image.format PROCESS_FORMAT do |command|
-        command.args << CONFIG_OPTIONS
+        command.args << GLOBAL_CMD_ARGS
       end
       set_RGB_colorspace(image)
       image.strip do |command|
-        command.args << CONFIG_OPTIONS
+        command.args << GLOBAL_CMD_ARGS
       end
       return image
     end
 
     def set_RGB_colorspace(image)
-      colorspace = run_system_command("identify #{CONFIG_OPTIONS} -format \"%r\" #{image.path}", "Error reading document colorspace")
+      colorspace = run_system_command("identify #{GLOBAL_CMD_ARGS} -format \"%r\" #{image.path}", "Error reading document colorspace")
       puts "Colorspace: #{colorspace}"
       if colorspace =~ /CMYK/
         image.combine_options do |img|
-          img.args << CONFIG_OPTIONS
+          img.args << GLOBAL_CMD_ARGS
           img.profile File.join(File.dirname(__FILE__), 'USWebCoatedSWOP.icc')
           img.profile File.join(File.dirname(__FILE__), 'sRGB.icm')
           img.colorspace 'sRGB'
@@ -100,7 +100,7 @@ module Pruview
         crop_image(image, crop)
         if crop || @image[:width].to_i > width || @image[:height] > height
           image.resize "#{width}x#{height}" do |cmd|
-            cmd.args << CONFIG_OPTIONS
+            cmd.args << GLOBAL_CMD_ARGS
           end
         end
         return image
@@ -122,7 +122,7 @@ module Pruview
           shave_off = ((image[:height].to_i - rheight)/2).round
           puts "shave off height: #{image[:height].to_i - rheight}"
           image.shave("0x#{shave_off}") do |cmd|
-            cmd.args << CONFIG_OPTIONS
+            cmd.args << GLOBAL_CMD_ARGS
           end
           puts "image crop size: #{image[:width].to_i}x#{image[:height].to_i}"
         elsif ratio_height > ratio_width || (ratio_width == ratio_height && image[:width].to_i > image[:height].to_i)
@@ -131,7 +131,7 @@ module Pruview
           # shave off width
           shave_off = ((image[:width].to_i - rwidth).to_f / 2.to_f).round
           image.shave("#{shave_off}x0") do |cmd|
-            cmd.args << CONFIG_OPTIONS
+            cmd.args << GLOBAL_CMD_ARGS
           end
         end
       end
@@ -148,7 +148,7 @@ module Pruview
 
   # Configurations
   Document::PROCESS_FORMAT = 'jpg'
-  Document::CONFIG_OPTIONS = '-limit memory 500mb'
+  Document::GLOBAL_CMD_ARGS = '-limit memory 500mb'
 
   Document::PSD_EXT = '.psd'
   Document::POSTSCRIPT_EXT = ['.pdf', '.eps', '.ai']
