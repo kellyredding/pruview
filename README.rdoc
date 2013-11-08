@@ -11,9 +11,9 @@ A gem to ease generating image previews (thumbnails) of various files
     # => install ffmpeg with whatever build dependencies you need for video/audio handling, etc...)
     # if you want to preview postscript files (PDFs, Adobe Illustrator, etc...)
     # => install any postscript handling libs or dependencies for image magick
-    
+
     gem install kelredd-pruview
-    
+
 == Dependencies
 
     * image magick + any special file type handling dependencies
@@ -34,11 +34,11 @@ A gem to ease generating image previews (thumbnails) of various files
     video_image_path = Pruview::VideoImage.to_jpg(<video_file_path>, <pruview_output_path>, <video_image_file_name>)
     document = Pruview::Document.new(video_image_path, <pruview_output_path>)
     video_image_thumb_path = document.to_jpg(<thumb_file_name>, <thumb_pixel_width>, <thumb_pixel_height)
-    
+
 
 == License
 
-Copyright (c) 2007-2009 Kelly Redding
+Copyright (c) 2007-2013 Kelly Redding
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
