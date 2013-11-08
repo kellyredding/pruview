@@ -7,10 +7,11 @@ Gem::Specification.new do |s|
   s.version     = Pruview::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Kelly D. Redding"]
-  s.email       = ["kelly@kelredd.com"]
-  s.homepage    = "http://github.com/kelredd/pruview"
+  s.email       = ["kelly@kellyredding.com"]
+  s.homepage    = "http://github.com/kellyredding/pruview"
   s.summary     = %q{Ease generating image previews (thumbnails) of various files}
   s.description = %q{Ease generating image previews (thumbnails) of various files}
+  s.license     = 'MIT'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
