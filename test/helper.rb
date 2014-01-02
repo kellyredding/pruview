@@ -14,14 +14,14 @@ FILES_PATH = "./test/files"
 OUTPUT_PATH = "./test_output"
 INVALID_OUTPUT_PATH = "./test_output/invalid"
 FILES = {
-  'basic image' => "./test/files/basic.jpg",
-  'invalid image' => "./test/files/invalid.jpg",
-  'error image' => "./test/files/error.jpg",
-  'basic video' => "./test/files/basic.mpg",
-  'invalid video' => "./test/files/invalid.mov",
-  'error video' => "./test/files/error.mov",
+  'basic image'    => "./test/files/basic.jpg",
+  'invalid image'  => "./test/files/invalid.jpg",
+  'error image'    => "./test/files/error.jpg",
+  'basic video'    => "./test/files/basic.mpg",
+  'invalid video'  => "./test/files/invalid.mov",
+  'error video'    => "./test/files/error.mov",
   'invalid format' => "./test/files/invalid_format.poop",
-  'tiff' => "./test/files/image.tiff"
+  'tiff'           => "./test/files/image.tiff"
 }
 
 FileUtils.mkdir_p File.expand_path(FILES_PATH) unless File.exists? File.expand_path(FILES_PATH)
