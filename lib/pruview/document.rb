@@ -83,14 +83,11 @@ module Pruview
 
     def set_RGB_colorspace(image)
       colorspace = run_system_command("identify #{GLOBAL_CMD_ARGS} -format \"%r\" #{image.path}", "Error reading document colorspace")
-      puts "Colorspace: #{colorspace}"
-      if colorspace =~ /CMYK/
-        image.combine_options do |img|
-          img.args << GLOBAL_CMD_ARGS
-          img.profile File.join(File.dirname(__FILE__), 'USWebCoatedSWOP.icc')
-          img.profile File.join(File.dirname(__FILE__), 'sRGB.icm')
-          img.colorspace 'sRGB'
-        end
+      image.combine_options do |img|
+        img.args << GLOBAL_CMD_ARGS
+        img.profile File.join(File.dirname(__FILE__), 'USWebCoatedSWOP.icc')
+        img.profile File.join(File.dirname(__FILE__), 'sRGB.icm')
+        img.colorspace 'sRGB'
       end
     end
 
