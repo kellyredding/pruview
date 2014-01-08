@@ -71,23 +71,18 @@ module Pruview
     end
 
     def process_image(image)
-      image.format PROCESS_FORMAT do |command|
-        command.args << GLOBAL_CMD_ARGS
-      end
-      set_RGB_colorspace(image)
-      image.strip do |command|
-        command.args << GLOBAL_CMD_ARGS
-      end
-      return image
-    end
-
-    def set_RGB_colorspace(image)
-      colorspace = run_system_command("identify #{GLOBAL_CMD_ARGS} -format \"%r\" #{image.path}", "Error reading document colorspace")
-      image.combine_options do |img|
-        img.args << GLOBAL_CMD_ARGS
-        img.profile File.join(File.dirname(__FILE__), 'USWebCoatedSWOP.icc')
-        img.profile File.join(File.dirname(__FILE__), 'sRGB.icm')
-        img.colorspace 'sRGB'
+      begin
+        image.format PROCESS_FORMAT do |command|
+          command.args << GLOBAL_CMD_ARGS
+          command.profile File.join(File.dirname(__FILE__), 'sRGB_v4_ICC_preference.icc')
+          command.colorspace 'sRGB'
+        end
+        image.strip do |command|
+          command.args << GLOBAL_CMD_ARGS
+        end
+        return image
+      rescue Exception => err
+        raise "Error processing image: #{err.message}"
       end
     end
 
